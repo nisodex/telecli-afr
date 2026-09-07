@@ -278,8 +278,18 @@ class UpdateService extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final tempDir = await getTemporaryDirectory();
-      final targetFile = File('${tempDir.path}/afr5g_update_${update.version}.apk');
+      Directory downloadDir;
+      try {
+        final extDirs = await getExternalCacheDirectories();
+        if (extDirs != null && extDirs.isNotEmpty) {
+          downloadDir = extDirs.first;
+        } else {
+          downloadDir = await getTemporaryDirectory();
+        }
+      } catch (_) {
+        downloadDir = await getTemporaryDirectory();
+      }
+      final targetFile = File('${downloadDir.path}/telecli_update_${update.version}.apk');
 
       // If already completely downloaded
       if (await targetFile.exists() && update.fileSizeBytes != null && await targetFile.length() == update.fileSizeBytes) {
@@ -289,6 +299,12 @@ class UpdateService extends ChangeNotifier {
         _statusMessage = 'Paquete listo para instalar.';
         notifyListeners();
         return targetFile;
+      }
+
+      if (await targetFile.exists()) {
+        try {
+          await targetFile.delete();
+        } catch (_) {}
       }
 
       // If downloading from a mock or offline URL

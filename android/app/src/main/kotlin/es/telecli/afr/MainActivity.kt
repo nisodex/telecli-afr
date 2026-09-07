@@ -53,6 +53,7 @@ class MainActivity : FlutterActivity() {
                     }
 
                     try {
+                        file.setReadable(true, false)
                         val uri: Uri = FileProvider.getUriForFile(
                             this,
                             "$packageName.fileprovider",
@@ -63,6 +64,13 @@ class MainActivity : FlutterActivity() {
                             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                         }
+
+                        val resolveInfoList = packageManager.queryIntentActivities(intent, 0)
+                        for (resolveInfo in resolveInfoList) {
+                            val targetPkg = resolveInfo.activityInfo.packageName
+                            grantUriPermission(targetPkg, uri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                        }
+
                         startActivity(intent)
                         result.success(true)
                     } catch (e: Exception) {
