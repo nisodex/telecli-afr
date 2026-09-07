@@ -10,9 +10,11 @@ class TowerModel {
   final double longitude;
   final String detailUrl;
   final List<String> bands;
-  final bool has5Gn78; // 3.5 GHz primary band for Movistar AFR 5G
+  final bool has5Gn78; // 3.5 GHz primary band for AFR 5G
   final bool has5Gn28; // 700 MHz rural 5G band
-  final bool has4G;
+  final bool has4G;    // 4G LTE
+  final bool has3G;    // 3G UMTS (900/2100 MHz)
+  final bool has2G;    // 2G GSM (900/1800 MHz)
   final bool isMovistar;
   final double? radiationLevel; // In uW/cm2
   final List<double> sectorAzimuths;
@@ -34,6 +36,8 @@ class TowerModel {
     this.has5Gn78 = false,
     this.has5Gn28 = false,
     this.has4G = true,
+    this.has3G = false,
+    this.has2G = false,
     required this.isMovistar,
     this.radiationLevel,
     this.sectorAzimuths = const [],
@@ -85,6 +89,8 @@ class TowerModel {
     bool? has5Gn78,
     bool? has5Gn28,
     bool? has4G,
+    bool? has3G,
+    bool? has2G,
     double? radiationLevel,
     List<double>? sectorAzimuths,
   }) {
@@ -100,6 +106,8 @@ class TowerModel {
       has5Gn78: has5Gn78 ?? this.has5Gn78,
       has5Gn28: has5Gn28 ?? this.has5Gn28,
       has4G: has4G ?? this.has4G,
+      has3G: has3G ?? this.has3G,
+      has2G: has2G ?? this.has2G,
       isMovistar: isMovistar,
       radiationLevel: radiationLevel ?? this.radiationLevel,
       sectorAzimuths: sectorAzimuths ?? this.sectorAzimuths,
@@ -123,6 +131,8 @@ class TowerModel {
       'has5Gn78': has5Gn78 ? 1 : 0,
       'has5Gn28': has5Gn28 ? 1 : 0,
       'has4G': has4G ? 1 : 0,
+      'has3G': has3G ? 1 : 0,
+      'has2G': has2G ? 1 : 0,
       'isMovistar': isMovistar ? 1 : 0,
       'radiationLevel': radiationLevel,
       'sectorAzimuths': sectorAzimuths.join(','),
@@ -145,6 +155,8 @@ class TowerModel {
       has5Gn78: (map['has5Gn78'] as int? ?? 0) == 1,
       has5Gn28: (map['has5Gn28'] as int? ?? 0) == 1,
       has4G: (map['has4G'] as int? ?? 1) == 1,
+      has3G: (map['has3G'] as int? ?? 0) == 1,
+      has2G: (map['has2G'] as int? ?? 0) == 1,
       isMovistar: (map['isMovistar'] as int? ?? 0) == 1,
       radiationLevel: map['radiationLevel'] != null ? (map['radiationLevel'] as num).toDouble() : null,
       sectorAzimuths: sectorsRaw.isNotEmpty

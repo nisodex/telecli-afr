@@ -255,7 +255,13 @@ class _MapScreenState extends State<MapScreen> {
                         ? AppColors.accent5G
                         : tower.has5Gn28
                             ? AppColors.accent5GLow
-                            : AppColors.accent4G;
+                            : tower.has4G
+                                ? AppColors.accent4G
+                                : tower.has3G
+                                    ? AppColors.accent3G
+                                    : tower.has2G
+                                        ? AppColors.accent2G
+                                        : AppColors.accentOther;
 
                     return Marker(
                       point: LatLng(tower.latitude, tower.longitude),
@@ -441,19 +447,59 @@ class _MapScreenState extends State<MapScreen> {
                           Container(
                             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                             decoration: BoxDecoration(
-                              color: (_selectedTower!.has5Gn78 ? AppColors.accent5G : AppColors.accent5GLow)
+                              color: (_selectedTower!.has5Gn78
+                                      ? AppColors.accent5G
+                                      : _selectedTower!.has5Gn28
+                                          ? AppColors.accent5GLow
+                                          : _selectedTower!.has4G
+                                              ? AppColors.accent4G
+                                              : _selectedTower!.has3G
+                                                  ? AppColors.accent3G
+                                                  : _selectedTower!.has2G
+                                                      ? AppColors.accent2G
+                                                      : AppColors.accentOther)
                                   .withValues(alpha: 0.2),
                               borderRadius: BorderRadius.circular(6),
                               border: Border.all(
-                                color: _selectedTower!.has5Gn78 ? AppColors.accent5G : AppColors.accent5GLow,
+                                color: _selectedTower!.has5Gn78
+                                    ? AppColors.accent5G
+                                    : _selectedTower!.has5Gn28
+                                        ? AppColors.accent5GLow
+                                        : _selectedTower!.has4G
+                                            ? AppColors.accent4G
+                                            : _selectedTower!.has3G
+                                                ? AppColors.accent3G
+                                                : _selectedTower!.has2G
+                                                    ? AppColors.accent2G
+                                                    : AppColors.accentOther,
                               ),
                             ),
                             child: Text(
-                              _selectedTower!.has5Gn78 ? 'AFR 5G (n78)' : '5G (n28)',
+                              _selectedTower!.has5Gn78
+                                  ? 'AFR 5G (n78)'
+                                  : _selectedTower!.has5Gn28
+                                      ? '5G (n28)'
+                                      : _selectedTower!.has4G
+                                          ? '4G LTE'
+                                          : _selectedTower!.has3G
+                                              ? '3G UMTS'
+                                              : _selectedTower!.has2G
+                                                  ? '2G GSM'
+                                                  : 'MÓVIL',
                               style: TextStyle(
                                 fontSize: 11,
                                 fontWeight: FontWeight.bold,
-                                color: _selectedTower!.has5Gn78 ? AppColors.accent5G : AppColors.accent5GLow,
+                                color: _selectedTower!.has5Gn78
+                                    ? AppColors.accent5G
+                                    : _selectedTower!.has5Gn28
+                                        ? AppColors.accent5GLow
+                                        : _selectedTower!.has4G
+                                            ? AppColors.accent4G
+                                            : _selectedTower!.has3G
+                                                ? AppColors.accent3G
+                                                : _selectedTower!.has2G
+                                                    ? AppColors.accent2G
+                                                    : AppColors.accentOther,
                               ),
                             ),
                           ),

@@ -176,6 +176,22 @@ class _TowerDetailScreenState extends State<TowerDetailScreen> {
                               AppColors.accent4G,
                             ),
                           ],
+                          if (_tower.has3G) ...[
+                            const SizedBox(height: 8),
+                            _buildBandBadge(
+                              '3G UMTS / WCDMA (900 / 2100 MHz)',
+                              'Banda de voz y datos móviles 3G',
+                              AppColors.accent3G,
+                            ),
+                          ],
+                          if (_tower.has2G) ...[
+                            const SizedBox(height: 8),
+                            _buildBandBadge(
+                              '2G GSM / GPRS / EDGE (900 / 1800 MHz)',
+                              'Banda básica de telefonía móvil y telemetría',
+                              AppColors.accent2G,
+                            ),
+                          ],
                           if (_tower.bands.isNotEmpty) ...[
                             const SizedBox(height: 12),
                             const Text(

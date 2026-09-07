@@ -90,6 +90,10 @@ class TowerListViewModel extends ChangeNotifier {
           return t.isMovistar && t.has5Gn28;
         case '4G LTE':
           return t.isMovistar && t.has4G;
+        case '3G UMTS':
+          return t.isMovistar && t.has3G;
+        case '2G GSM':
+          return t.isMovistar && t.has2G;
         case 'Movistar':
           return t.isMovistar;
         case 'Todas':

@@ -420,18 +420,54 @@ class _HomeScreenState extends State<HomeScreen> {
       );
     }
 
+    final Color bestColor = t.has5Gn78
+        ? AppColors.accent5G
+        : t.has5Gn28
+            ? AppColors.accent5GLow
+            : t.has4G
+                ? AppColors.accent4G
+                : t.has3G
+                    ? AppColors.accent3G
+                    : t.has2G
+                        ? AppColors.accent2G
+                        : AppColors.primary;
+
+    final String badgeLabel = t.has5Gn78
+        ? '⭐ RECOMENDADA PARA AFR 5G'
+        : t.has5Gn28
+            ? 'COBERTURA 5G DISPONIBLE'
+            : t.has4G
+                ? 'COBERTURA 4G LTE'
+                : t.has3G
+                    ? 'COBERTURA 3G UMTS'
+                    : t.has2G
+                        ? 'COBERTURA 2G GSM'
+                        : 'ESTACIÓN BASE';
+
+    final String bandLabel = t.has5Gn78
+        ? '3.5 GHz'
+        : t.has5Gn28
+            ? '700 MHz'
+            : t.has4G
+                ? '4G LTE'
+                : t.has3G
+                    ? '3G UMTS'
+                    : t.has2G
+                        ? '2G GSM'
+                        : 'Móvil';
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: AppColors.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: t.has5Gn78 ? AppColors.accent5G : AppColors.primary,
+          color: bestColor,
           width: 1.5,
         ),
         boxShadow: [
           BoxShadow(
-            color: (t.has5Gn78 ? AppColors.accent5G : AppColors.primary).withValues(alpha: 0.12),
+            color: bestColor.withValues(alpha: 0.12),
             blurRadius: 12,
             spreadRadius: 1,
           ),
@@ -446,15 +482,15 @@ class _HomeScreenState extends State<HomeScreen> {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                 decoration: BoxDecoration(
-                  color: (t.has5Gn78 ? AppColors.accent5G : AppColors.accent5GLow).withValues(alpha: 0.2),
+                  color: bestColor.withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(6),
                 ),
                 child: Text(
-                  t.has5Gn78 ? '⭐ RECOMENDADA PARA AFR 5G' : 'COBERTURA 5G DISPONIBLE',
+                  badgeLabel,
                   style: TextStyle(
                     fontSize: 10,
                     fontWeight: FontWeight.w900,
-                    color: t.has5Gn78 ? AppColors.accent5G : AppColors.accent5GLow,
+                    color: bestColor,
                   ),
                 ),
               ),
@@ -499,11 +535,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Text(
-                  t.has5Gn78 ? '3.5 GHz' : '700 MHz',
+                  bandLabel,
                   style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.bold,
-                    color: t.has5Gn78 ? AppColors.accent5G : AppColors.accent5GLow,
+                    color: bestColor,
                   ),
                 ),
               ),

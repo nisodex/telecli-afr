@@ -73,42 +73,32 @@ class TowerCard extends StatelessWidget {
                       ),
                     ),
                     if (tower.has5Gn78)
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                        decoration: BoxDecoration(
-                          color: AppColors.accent5G.withValues(alpha: 0.18),
-                          borderRadius: BorderRadius.circular(6),
-                          border: Border.all(color: AppColors.accent5G, width: 1.2),
-                        ),
-                        child: const Text(
-                          'AFR 5G (3.5 GHz)',
-                          style: TextStyle(
-                            fontSize: 11,
-                            fontWeight: FontWeight.w800,
-                            color: AppColors.accent5G,
-                          ),
-                        ),
-                      )
+                      _buildHeaderBadge('AFR 5G (3.5 GHz)', AppColors.accent5G)
                     else if (tower.has5Gn28)
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                        decoration: BoxDecoration(
-                          color: AppColors.accent5GLow.withValues(alpha: 0.18),
-                          borderRadius: BorderRadius.circular(6),
-                          border: Border.all(color: AppColors.accent5GLow, width: 1.2),
-                        ),
-                        child: const Text(
-                          '5G 700 MHz',
-                          style: TextStyle(
-                            fontSize: 11,
-                            fontWeight: FontWeight.w800,
-                            color: AppColors.accent5GLow,
-                          ),
-                        ),
-                      ),
+                      _buildHeaderBadge('5G 700 MHz', AppColors.accent5GLow)
+                    else if (tower.has4G)
+                      _buildHeaderBadge('4G LTE', AppColors.accent4G)
+                    else if (tower.has3G)
+                      _buildHeaderBadge('3G UMTS', AppColors.accent3G)
+                    else if (tower.has2G)
+                      _buildHeaderBadge('2G GSM', AppColors.accent2G),
                   ],
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 8),
+
+                // Mini tech indicators row
+                Wrap(
+                  spacing: 5,
+                  runSpacing: 4,
+                  children: [
+                    if (tower.has5Gn78) _buildMiniTag('5G n78', AppColors.accent5G),
+                    if (tower.has5Gn28) _buildMiniTag('5G n28', AppColors.accent5GLow),
+                    if (tower.has4G) _buildMiniTag('4G LTE', AppColors.accent4G),
+                    if (tower.has3G) _buildMiniTag('3G', AppColors.accent3G),
+                    if (tower.has2G) _buildMiniTag('2G', AppColors.accent2G),
+                  ],
+                ),
+                const SizedBox(height: 8),
 
                 // Address
                 Text(
@@ -204,6 +194,44 @@ class TowerCard extends StatelessWidget {
               ],
             ),
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildHeaderBadge(String label, Color color) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: 0.18),
+        borderRadius: BorderRadius.circular(6),
+        border: Border.all(color: color, width: 1.2),
+      ),
+      child: Text(
+        label,
+        style: TextStyle(
+          fontSize: 11,
+          fontWeight: FontWeight.w800,
+          color: color,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMiniTag(String label, Color color) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: 0.12),
+        borderRadius: BorderRadius.circular(4),
+        border: Border.all(color: color.withValues(alpha: 0.6), width: 0.8),
+      ),
+      child: Text(
+        label,
+        style: TextStyle(
+          fontSize: 9,
+          fontWeight: FontWeight.w700,
+          color: color,
         ),
       ),
     );

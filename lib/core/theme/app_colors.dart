@@ -21,7 +21,9 @@ class AppColors {
   // Network & Technology Semantics
   static const Color accent5G = Color(0xFF00E676);         // 5G n78 3.5 GHz (optimal AFR 5G)
   static const Color accent5GLow = Color(0xFF00B0FF);      // 5G n28 700 MHz (rural coverage)
-  static const Color accent4G = Color(0xFFFFB300);         // 4G LTE fallback
+  static const Color accent4G = Color(0xFFFFB300);         // 4G LTE
+  static const Color accent3G = Color(0xFFFF6D00);         // 3G UMTS (orange)
+  static const Color accent2G = Color(0xFFAB47BC);         // 2G GSM (purple)
   static const Color accentOther = Color(0xFF78909C);       // Other operator
 
   // Status & Alignment HUD

@@ -68,6 +68,8 @@ void main() {
         has5Gn78: true,
         has5Gn28: true,
         has4G: true,
+        has3G: true,
+        has2G: true,
         isMovistar: true,
         sectorAzimuths: [0.0, 120.0, 240.0],
       );
@@ -78,6 +80,9 @@ void main() {
       expect(restored.id, equals(original.id));
       expect(restored.has5Gn78, isTrue);
       expect(restored.has5Gn28, isTrue);
+      expect(restored.has4G, isTrue);
+      expect(restored.has3G, isTrue);
+      expect(restored.has2G, isTrue);
       expect(restored.isMovistar, isTrue);
       expect(restored.sectorAzimuths.length, equals(3));
       expect(restored.sectorAzimuths[1], equals(120.0));

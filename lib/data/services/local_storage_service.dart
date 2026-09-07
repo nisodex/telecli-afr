@@ -42,7 +42,7 @@ class LocalStorageService {
 
     return await openDatabase(
       dbPath,
-      version: 3,
+      version: 4,
       onCreate: (db, version) async {
         await db.execute('''
           CREATE TABLE cached_towers (
@@ -57,6 +57,8 @@ class LocalStorageService {
             has5Gn78 INTEGER,
             has5Gn28 INTEGER,
             has4G INTEGER,
+            has3G INTEGER,
+            has2G INTEGER,
             isMovistar INTEGER,
             radiationLevel REAL,
             sectorAzimuths TEXT,
@@ -130,6 +132,12 @@ class LocalStorageService {
               lastUpdatedMs INTEGER NOT NULL
             )
           ''');
+        }
+        if (oldVersion < 4) {
+          try {
+            await db.execute('ALTER TABLE cached_towers ADD COLUMN has3G INTEGER DEFAULT 0');
+            await db.execute('ALTER TABLE cached_towers ADD COLUMN has2G INTEGER DEFAULT 0');
+          } catch (_) {}
         }
       },
     );

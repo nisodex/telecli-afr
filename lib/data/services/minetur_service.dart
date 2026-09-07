@@ -184,8 +184,16 @@ class MineturService {
     bool has5Gn78 = false;
     bool has5Gn28 = false;
     bool has4G = false;
+    bool has3G = false;
+    bool has2G = false;
     double? radiation;
     final List<double> sectorAzimuths = [];
+
+    final upperHtml = html.toUpperCase();
+    if (upperHtml.contains('GSM') || upperHtml.contains('2G')) has2G = true;
+    if (upperHtml.contains('UMTS') || upperHtml.contains('WCDMA') || upperHtml.contains('3G')) has3G = true;
+    if (upperHtml.contains('LTE') || upperHtml.contains('4G')) has4G = true;
+    if (upperHtml.contains('5G') || upperHtml.contains('NR')) has5Gn78 = true;
 
     // Parse frequency bands: e.g. "3460.00 - 3600.00" or "700" or "800"
     final freqRegex = RegExp(r'(\d{3,4}(?:\.\d{1,2})?)\s*-\s*(\d{3,4}(?:\.\d{1,2})?)');
@@ -208,10 +216,28 @@ class MineturService {
           if (!extractedBands.contains('4G LTE (800 MHz)')) {
             extractedBands.add('4G LTE (800 MHz)');
           }
+        } else if (minFreq >= 880 && maxFreq <= 960) {
+          has2G = true;
+          has3G = true;
+          if (!extractedBands.contains('2G/3G (900 MHz)')) {
+            extractedBands.add('2G/3G (900 MHz)');
+          }
         } else if (minFreq >= 1700 && maxFreq <= 1900) {
           has4G = true;
-          if (!extractedBands.contains('4G LTE (1800 MHz)')) {
-            extractedBands.add('4G LTE (1800 MHz)');
+          has2G = true;
+          if (!extractedBands.contains('4G/2G (1800 MHz)')) {
+            extractedBands.add('4G/2G (1800 MHz)');
+          }
+        } else if (minFreq >= 1920 && maxFreq <= 2170) {
+          has3G = true;
+          has4G = true;
+          if (!extractedBands.contains('3G/4G (2100 MHz)')) {
+            extractedBands.add('3G/4G (2100 MHz)');
+          }
+        } else if (minFreq >= 2500 && maxFreq <= 2690) {
+          has4G = true;
+          if (!extractedBands.contains('4G LTE (2600 MHz)')) {
+            extractedBands.add('4G LTE (2600 MHz)');
           }
         }
       }
@@ -236,19 +262,28 @@ class MineturService {
       has5Gn78: has5Gn78,
       has5Gn28: has5Gn28,
       has4G: has4G,
+      has3G: has3G,
+      has2G: has2G,
       radiationLevel: radiation,
       sectorAzimuths: sectorAzimuths,
     );
   }
 
-  /// Sensible defaults for Movistar BTS deployment
+  /// Sensible defaults for mobile cell tower deployment in Spain
   TowerModel _inferBandsForTower(TowerModel tower) {
-    // In urban/suburban areas Movistar deploys n78 (3.5 GHz) + n28 (700 MHz) + 4G LTE
     return tower.copyWithTechnicalDetails(
-      bands: ['5G n78 (3.5 GHz)', '5G n28 (700 MHz)', '4G LTE (800/1800)'],
+      bands: [
+        '5G n78 (3.5 GHz)',
+        '5G n28 (700 MHz)',
+        '4G LTE (800/1800/2600)',
+        '3G UMTS (900/2100)',
+        '2G GSM (900/1800)',
+      ],
       has5Gn78: true,
       has5Gn28: true,
       has4G: true,
+      has3G: true,
+      has2G: true,
       sectorAzimuths: [0.0, 120.0, 240.0],
     );
   }
@@ -263,10 +298,12 @@ class MineturService {
         'address': 'Torre Central gNodeB AFR 5G, Sector Norte',
         'latOffset': 0.0085,
         'lonOffset': 0.0065,
-        'bands': ['5G n78 (3.5 GHz)', '5G n28 (700 MHz)', '4G LTE'],
+        'bands': ['5G n78 (3.5 GHz)', '5G n28 (700 MHz)', '4G LTE', '3G UMTS', '2G GSM'],
         'has5Gn78': true,
         'has5Gn28': true,
         'has4G': true,
+        'has3G': true,
+        'has2G': true,
         'isMovistar': true,
         'sectors': [45.0, 165.0, 285.0],
       },
@@ -276,10 +313,12 @@ class MineturService {
         'address': 'Estación Base Telefónica Mástil Polígono Industrial',
         'latOffset': -0.0120,
         'lonOffset': 0.0110,
-        'bands': ['5G n78 (3.5 GHz)', '4G LTE (800/1800)'],
+        'bands': ['5G n78 (3.5 GHz)', '4G LTE (800/1800)', '3G UMTS'],
         'has5Gn78': true,
         'has5Gn28': false,
         'has4G': true,
+        'has3G': true,
+        'has2G': false,
         'isMovistar': true,
         'sectors': [0.0, 120.0, 240.0],
       },
@@ -289,10 +328,12 @@ class MineturService {
         'address': 'Repetidor Rural Telefónica Colina Oeste AFR',
         'latOffset': 0.0150,
         'lonOffset': -0.0145,
-        'bands': ['5G n28 (700 MHz)', '4G LTE (800)'],
+        'bands': ['5G n28 (700 MHz)', '4G LTE (800)', '2G GSM (900)'],
         'has5Gn78': false,
         'has5Gn28': true,
         'has4G': true,
+        'has3G': false,
+        'has2G': true,
         'isMovistar': true,
         'sectors': [90.0, 210.0, 330.0],
       },
@@ -302,23 +343,42 @@ class MineturService {
         'address': 'Estación Microcelda Telefónica Casco Urbano',
         'latOffset': -0.0050,
         'lonOffset': -0.0070,
-        'bands': ['4G LTE (800/1800/2600)'],
+        'bands': ['4G LTE (800/1800/2600)', '3G UMTS', '2G GSM'],
         'has5Gn78': false,
         'has5Gn28': false,
         'has4G': true,
+        'has3G': true,
+        'has2G': true,
         'isMovistar': true,
         'sectors': [30.0, 150.0, 270.0],
       },
       {
-        'id': 'ORA-4G-05',
+        'id': 'MOV-3G-05',
+        'code': 'TELEFONICA MOVILES ESPAÑA, S.A.U. - 2807719',
+        'address': 'Estación Histórica Telefónica Cobertura Rural',
+        'latOffset': -0.0180,
+        'lonOffset': -0.0190,
+        'bands': ['3G UMTS (900/2100)', '2G GSM (900/1800)'],
+        'has5Gn78': false,
+        'has5Gn28': false,
+        'has4G': false,
+        'has3G': true,
+        'has2G': true,
+        'isMovistar': true,
+        'sectors': [45.0, 225.0],
+      },
+      {
+        'id': 'ORA-4G-06',
         'code': 'ORANGE ESPAGNE, S.A.U. - MADR0069A',
         'address': 'Emplazamiento Compartido Orange',
         'latOffset': 0.0090,
         'lonOffset': -0.0030,
-        'bands': ['4G LTE'],
+        'bands': ['4G LTE', '3G UMTS', '2G GSM'],
         'has5Gn78': false,
         'has5Gn28': false,
         'has4G': true,
+        'has3G': true,
+        'has2G': true,
         'isMovistar': false,
         'sectors': [60.0, 180.0, 300.0],
       },
@@ -344,6 +404,8 @@ class MineturService {
         has5Gn78: s['has5Gn78'] as bool,
         has5Gn28: s['has5Gn28'] as bool,
         has4G: s['has4G'] as bool,
+        has3G: s['has3G'] as bool,
+        has2G: s['has2G'] as bool,
         isMovistar: isMov,
         sectorAzimuths: List<double>.from(s['sectors'] as List),
         distanceMeters: GeoCalculator.calculateDistanceMeters(lat, lon, tLat, tLon),
