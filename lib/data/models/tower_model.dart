@@ -164,4 +164,48 @@ class TowerModel {
           : [],
     );
   }
+
+  TowerModel copyWith({
+    String? id,
+    String? code,
+    String? operator,
+    String? address,
+    double? latitude,
+    double? longitude,
+    String? detailUrl,
+    List<String>? bands,
+    bool? has5Gn78,
+    bool? has5Gn28,
+    bool? has4G,
+    bool? has3G,
+    bool? has2G,
+    bool? isMovistar,
+    double? radiationLevel,
+    List<double>? sectorAzimuths,
+    double? distanceMeters,
+    double? azimuthBearing,
+    double? elevationTilt,
+  }) {
+    return TowerModel(
+      id: id ?? this.id,
+      code: code ?? this.code,
+      operator: operator ?? this.operator,
+      address: address ?? this.address,
+      latitude: latitude ?? this.latitude,
+      longitude: longitude ?? this.longitude,
+      detailUrl: detailUrl ?? this.detailUrl,
+      bands: bands ?? this.bands,
+      has5Gn78: has5Gn78 ?? this.has5Gn78,
+      has5Gn28: has5Gn28 ?? this.has5Gn28,
+      has4G: has4G ?? this.has4G,
+      has3G: has3G ?? this.has3G,
+      has2G: has2G ?? this.has2G,
+      isMovistar: isMovistar ?? this.isMovistar,
+      radiationLevel: radiationLevel ?? this.radiationLevel,
+      sectorAzimuths: sectorAzimuths ?? this.sectorAzimuths,
+      distanceMeters: distanceMeters ?? this.distanceMeters,
+      azimuthBearing: azimuthBearing ?? this.azimuthBearing,
+      elevationTilt: elevationTilt ?? this.elevationTilt,
+    );
+  }
 }

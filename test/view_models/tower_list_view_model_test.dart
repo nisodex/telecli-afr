@@ -3,7 +3,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:telecli_afr/data/models/tower_model.dart';
 import 'package:telecli_afr/data/repositories/location_repository.dart';
 import 'package:telecli_afr/data/repositories/tower_repository.dart';
-import 'package:telecli_afr/ui/view_models/tower_list_view_model.dart';
+import 'package:telecli_afr/ui/features/towers/view_models/tower_list_view_model.dart';
 
 class MockLocationRepo implements LocationRepository {
   @override
@@ -72,6 +72,9 @@ class MockTowerRepo implements TowerRepository {
 
   @override
   Future<TowerModel?> getTowerById(String id) async => null;
+
+  @override
+  Future<TowerModel> getTowerTechnicalDetails(TowerModel tower) async => tower;
 }
 
 void main() {

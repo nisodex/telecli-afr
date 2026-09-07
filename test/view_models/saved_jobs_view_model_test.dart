@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:telecli_afr/data/models/installation_job.dart';
 import 'package:telecli_afr/data/repositories/installation_job_repository.dart';
-import 'package:telecli_afr/ui/view_models/saved_jobs_view_model.dart';
+import 'package:telecli_afr/ui/features/jobs/view_models/saved_jobs_view_model.dart';
 
 class MockJobRepository implements InstallationJobRepository {
   final List<InstallationJob> _db = [];

@@ -3,7 +3,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:telecli_afr/data/models/tower_model.dart';
 import 'package:telecli_afr/data/repositories/location_repository.dart';
 import 'package:telecli_afr/data/repositories/tower_repository.dart';
-import 'package:telecli_afr/ui/view_models/home_view_model.dart';
+import 'package:telecli_afr/ui/features/home/view_models/home_view_model.dart';
 
 class FakeLocationRepository implements LocationRepository {
   @override
@@ -57,6 +57,9 @@ class FakeTowerRepository implements TowerRepository {
 
   @override
   Future<TowerModel?> getTowerById(String id) async => null;
+
+  @override
+  Future<TowerModel> getTowerTechnicalDetails(TowerModel tower) async => tower;
 }
 
 void main() {

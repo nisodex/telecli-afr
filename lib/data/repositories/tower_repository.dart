@@ -11,6 +11,8 @@ abstract class TowerRepository {
   });
 
   Future<TowerModel?> getTowerById(String id);
+
+  Future<TowerModel> getTowerTechnicalDetails(TowerModel tower);
 }
 
 /// Production implementation consuming MineturService and caching stations.
@@ -48,5 +50,10 @@ class TowerRepositoryImpl implements TowerRepository {
       }
     }
     return null;
+  }
+
+  @override
+  Future<TowerModel> getTowerTechnicalDetails(TowerModel tower) async {
+    return await _mineturService.fetchTowerTechnicalDetails(tower);
   }
 }

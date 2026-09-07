@@ -1,10 +1,10 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'core/di/service_locator.dart';
 import 'core/theme/app_colors.dart';
 import 'core/theme/app_theme.dart';
-import 'data/services/local_storage_service.dart';
-import 'ui/screens/main_navigation_screen.dart';
+import 'package:telecli_afr/ui/features/navigation/views/main_navigation_screen.dart';
 
 /// Allows trusting Spanish Government FNMT certificates for geoportal.minetur.gob.es
 class MineturHttpOverrides extends HttpOverrides {
@@ -32,7 +32,7 @@ void main() async {
   );
 
   // Initialize SQLite database
-  await LocalStorageService().database;
+  await ServiceLocator.localStorageService.database;
 
   runApp(const MovistarAfr5gApp());
 }
