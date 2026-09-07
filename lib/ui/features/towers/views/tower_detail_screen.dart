@@ -114,11 +114,10 @@ class _TowerDetailScreenState extends State<TowerDetailScreen> {
                         const Divider(color: AppColors.outline),
                         const SizedBox(height: 10),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            _buildSummaryItem('Distancia', GeoCalculator.formatDistance(tower.distanceMeters)),
-                            _buildSummaryItem('Azimut', '${tower.azimuthBearing.toStringAsFixed(0)}° (${GeoCalculator.bearingToCardinal(tower.azimuthBearing)})'),
-                            _buildSummaryItem('Elevación', '${tower.elevationTilt.toStringAsFixed(1)}°'),
+                            Expanded(child: _buildSummaryItem('Distancia', GeoCalculator.formatDistance(tower.distanceMeters))),
+                            Expanded(child: _buildSummaryItem('Azimut', '${tower.azimuthBearing.toStringAsFixed(0)}° (${GeoCalculator.bearingToCardinal(tower.azimuthBearing)})')),
+                            Expanded(child: _buildSummaryItem('Elevación', '${tower.elevationTilt.toStringAsFixed(1)}°')),
                           ],
                         ),
                       ],
@@ -251,37 +250,44 @@ class _TowerDetailScreenState extends State<TowerDetailScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const Text('PÉRDIDA ESPACIO LIBRE', style: TextStyle(fontSize: 10, color: AppColors.onSurfaceVariant, fontWeight: FontWeight.bold)),
-                                  Text(
-                                    '${RfCalculator.calculateFspl(tower.distanceMeters, tower.has5Gn78 ? RfCalculator.freq5Gn78Mhz : RfCalculator.freq5Gn28Mhz).toStringAsFixed(1)} dB',
-                                    style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
-                                  ),
-                                ],
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Text('PÉRDIDA ESPACIO LIBRE', maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 10, color: AppColors.onSurfaceVariant, fontWeight: FontWeight.bold)),
+                                    Text(
+                                      '${RfCalculator.calculateFspl(tower.distanceMeters, tower.has5Gn78 ? RfCalculator.freq5Gn78Mhz : RfCalculator.freq5Gn28Mhz).toStringAsFixed(1)} dB',
+                                      style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
+                                    ),
+                                  ],
+                                ),
                               ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const Text('1ª ZONA FRESNEL (r₁)', style: TextStyle(fontSize: 10, color: AppColors.onSurfaceVariant, fontWeight: FontWeight.bold)),
-                                  Text(
-                                    '${RfCalculator.calculateFresnelRadius(tower.distanceMeters, tower.has5Gn78 ? RfCalculator.freq5Gn78Mhz : RfCalculator.freq5Gn28Mhz).toStringAsFixed(2)} m',
-                                    style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: AppColors.primary),
-                                  ),
-                                ],
+                              const SizedBox(width: 8),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Text('1ª ZONA FRESNEL (r₁)', maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 10, color: AppColors.onSurfaceVariant, fontWeight: FontWeight.bold)),
+                                    Text(
+                                      '${RfCalculator.calculateFresnelRadius(tower.distanceMeters, tower.has5Gn78 ? RfCalculator.freq5Gn78Mhz : RfCalculator.freq5Gn28Mhz).toStringAsFixed(2)} m',
+                                      style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: AppColors.primary),
+                                    ),
+                                  ],
+                                ),
                               ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const Text('RSRP TEÓRICO', style: TextStyle(fontSize: 10, color: AppColors.onSurfaceVariant, fontWeight: FontWeight.bold)),
-                                  Text(
-                                    '${RfCalculator.estimateRsrp(distanceMeters: tower.distanceMeters, isN78: tower.has5Gn78).toStringAsFixed(0)} dBm',
-                                    style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: AppColors.accent5G),
-                                  ),
-                                ],
+                              const SizedBox(width: 8),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Text('RSRP TEÓRICO', maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 10, color: AppColors.onSurfaceVariant, fontWeight: FontWeight.bold)),
+                                    Text(
+                                      '${RfCalculator.estimateRsrp(distanceMeters: tower.distanceMeters, isN78: tower.has5Gn78).toStringAsFixed(0)} dBm',
+                                      style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: AppColors.accent5G),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ],
                           ),
@@ -376,9 +382,21 @@ class _TowerDetailScreenState extends State<TowerDetailScreen> {
   Widget _buildSummaryItem(String label, String value) {
     return Column(
       children: [
-        Text(label, style: const TextStyle(fontSize: 10, color: AppColors.onSurfaceVariant)),
+        Text(
+          label,
+          textAlign: TextAlign.center,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: const TextStyle(fontSize: 10, color: AppColors.onSurfaceVariant),
+        ),
         const SizedBox(height: 2),
-        Text(value, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white)),
+        Text(
+          value,
+          textAlign: TextAlign.center,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
+        ),
       ],
     );
   }

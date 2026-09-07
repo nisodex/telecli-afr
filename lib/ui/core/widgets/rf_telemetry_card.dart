@@ -257,8 +257,9 @@ class _RfTelemetryCardState extends State<RfTelemetryCard> {
                     ),
 
                   // Sensor Telemetry Details Bar
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  Wrap(
+                    spacing: 6,
+                    runSpacing: 6,
                     children: [
                       _buildSensorPill(
                         'Declinación Mag:',

@@ -170,13 +170,22 @@ class _TowerListScreenState extends State<TowerListScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      'Torres encontradas: ${filteredTowers.length}',
-                      style: const TextStyle(fontSize: 12, color: AppColors.onSurfaceVariant, fontWeight: FontWeight.w600),
+                    Flexible(
+                      child: Text(
+                        'Torres encontradas: ${filteredTowers.length}',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(fontSize: 12, color: AppColors.onSurfaceVariant, fontWeight: FontWeight.w600),
+                      ),
                     ),
-                    const Text(
-                      'Ordenado por distancia',
-                      style: TextStyle(fontSize: 11, color: AppColors.primary),
+                    const SizedBox(width: 8),
+                    const Flexible(
+                      child: Text(
+                        'Ordenado por distancia',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(fontSize: 11, color: AppColors.primary),
+                      ),
                     ),
                   ],
                 ),

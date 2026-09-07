@@ -345,111 +345,128 @@ Generado por Terminal Técnico Movistar AFR 5G
 
                                     // Alignment specifics
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            const Text('RUMBO FIJADO', style: TextStyle(fontSize: 10, color: AppColors.onSurfaceVariant)),
-                                            Text(
-                                              '${job.targetBearing.toStringAsFixed(0)}° (${GeoCalculator.bearingToCardinal(job.targetBearing)})',
-                                              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w800, color: AppColors.primary),
-                                            ),
-                                          ],
-                                        ),
-                                        Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            const Text('DISTANCIA', style: TextStyle(fontSize: 10, color: AppColors.onSurfaceVariant)),
-                                            Text(
-                                              GeoCalculator.formatDistance(job.distanceMeters),
-                                              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
-                                            ),
-                                          ],
-                                        ),
-                                        if (job.rsrpDbm != null)
-                                          Column(
+                                        Expanded(
+                                          child: Column(
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
-                                              const Text('SEÑAL RSRP', style: TextStyle(fontSize: 10, color: AppColors.onSurfaceVariant)),
+                                              const Text('RUMBO FIJADO', maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 10, color: AppColors.onSurfaceVariant)),
                                               Text(
-                                                '${job.rsrpDbm} dBm',
-                                                style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: AppColors.accent5G),
+                                                '${job.targetBearing.toStringAsFixed(0)}° (${GeoCalculator.bearingToCardinal(job.targetBearing)})',
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w800, color: AppColors.primary),
                                               ),
                                             ],
                                           ),
+                                        ),
+                                        const SizedBox(width: 8),
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              const Text('DISTANCIA', maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 10, color: AppColors.onSurfaceVariant)),
+                                              Text(
+                                                GeoCalculator.formatDistance(job.distanceMeters),
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        if (job.rsrpDbm != null) ...[
+                                          const SizedBox(width: 8),
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                const Text('SEÑAL RSRP', maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 10, color: AppColors.onSurfaceVariant)),
+                                                Text(
+                                                  '${job.rsrpDbm} dBm',
+                                                  maxLines: 1,
+                                                  overflow: TextOverflow.ellipsis,
+                                                  style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: AppColors.accent5G),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
                                       ],
                                     ),
                                     if (job.fsplDb != null) ...[
                                       const SizedBox(height: 10),
                                       Container(
+                                        width: double.infinity,
                                         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                                         decoration: BoxDecoration(
                                           color: AppColors.surfaceVariant.withValues(alpha: 0.7),
                                           borderRadius: BorderRadius.circular(8),
                                         ),
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        child: Wrap(
+                                          spacing: 12,
+                                          runSpacing: 4,
+                                          alignment: WrapAlignment.spaceBetween,
                                           children: [
                                             Text('FSPL: ${job.fsplDb!.toStringAsFixed(1)} dB', style: const TextStyle(fontSize: 11, color: AppColors.onSurfaceVariant)),
                                             if (job.fresnelRadiusMeters != null)
                                               Text('Fresnel: ${job.fresnelRadiusMeters!.toStringAsFixed(1)} m', style: const TextStyle(fontSize: 11, color: AppColors.primary)),
                                             if (job.downlinkEstimatedMbps != null)
                                               Text('DL: ${job.downlinkEstimatedMbps} Mbps', style: const TextStyle(fontSize: 11, color: AppColors.accent5G, fontWeight: FontWeight.bold)),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                  if (job.notes.isNotEmpty) ...[
-                                    const SizedBox(height: 10),
-                                    Container(
-                                      width: double.infinity,
-                                      padding: const EdgeInsets.all(10),
-                                      decoration: BoxDecoration(
-                                        color: AppColors.surfaceVariant,
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                      child: Text(
-                                        job.notes,
-                                        style: const TextStyle(fontSize: 12, fontStyle: FontStyle.italic, color: Colors.white70),
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                    ),
-                                  ],
-                                  const SizedBox(height: 12),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(dateStr, style: const TextStyle(fontSize: 11, color: AppColors.outline)),
-                                      Row(
-                                        children: [
-                                          IconButton(
-                                            icon: const Icon(Icons.share, size: 20, color: AppColors.primary),
-                                            tooltip: 'Compartir Boletín Oficial',
-                                            onPressed: () => _showShareOptionsModal(job),
-                                          ),
-                                          IconButton(
-                                            icon: const Icon(Icons.delete_outline, size: 20, color: AppColors.accentError),
-                                            tooltip: 'Eliminar informe',
-                                            onPressed: () => _deleteJob(job.id),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
                                     ],
-                                  ),
-                                ],
+                                    if (job.notes.isNotEmpty) ...[
+                                      const SizedBox(height: 10),
+                                      Container(
+                                        width: double.infinity,
+                                        padding: const EdgeInsets.all(10),
+                                        decoration: BoxDecoration(
+                                          color: AppColors.surfaceVariant,
+                                          borderRadius: BorderRadius.circular(8),
+                                        ),
+                                        child: Text(
+                                          job.notes,
+                                          style: const TextStyle(fontSize: 12, fontStyle: FontStyle.italic, color: Colors.white70),
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                    ],
+                                    const SizedBox(height: 12),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(dateStr, style: const TextStyle(fontSize: 11, color: AppColors.outline)),
+                                        Row(
+                                          children: [
+                                            IconButton(
+                                              icon: const Icon(Icons.share, size: 20, color: AppColors.primary),
+                                              tooltip: 'Compartir Boletín Oficial',
+                                              onPressed: () => _showShareOptionsModal(job),
+                                            ),
+                                            IconButton(
+                                              icon: const Icon(Icons.delete_outline, size: 20, color: AppColors.accentError),
+                                              tooltip: 'Eliminar informe',
+                                              onPressed: () => _deleteJob(job.id),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                        );
-                      }
+                          );
+                        }
 
-                      return Center(
-                        child: ConstrainedBox(
-                          constraints: const BoxConstraints(maxWidth: 1400),
-                          child: isWide
-                              ? GridView.builder(
+                        return Center(
+                          child: ConstrainedBox(
+                            constraints: const BoxConstraints(maxWidth: 1400),
+                            child: isWide
+                                ? GridView.builder(
                                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                                   gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                                     maxCrossAxisExtent: 540,

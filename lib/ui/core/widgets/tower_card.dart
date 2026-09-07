@@ -120,42 +120,53 @@ class TowerCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      Column(
-                        children: [
-                          const Text(
-                            'DISTANCIA',
-                            style: TextStyle(fontSize: 10, color: AppColors.onSurfaceVariant, fontWeight: FontWeight.bold),
-                          ),
-                          const SizedBox(height: 2),
-                          Text(
-                            GeoCalculator.formatDistance(tower.distanceMeters),
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w800,
-                              color: Colors.white,
+                      Expanded(
+                        child: Column(
+                          children: [
+                            const Text(
+                              'DISTANCIA',
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(fontSize: 10, color: AppColors.onSurfaceVariant, fontWeight: FontWeight.bold),
                             ),
-                          ),
-                        ],
+                            const SizedBox(height: 2),
+                            Text(
+                              GeoCalculator.formatDistance(tower.distanceMeters),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w800,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                       Container(width: 1, height: 28, color: AppColors.outline),
-                      Column(
-                        children: [
-                          const Text(
-                            'RUMBO / AZIMUT',
-                            style: TextStyle(fontSize: 10, color: AppColors.onSurfaceVariant, fontWeight: FontWeight.bold),
-                          ),
-                          const SizedBox(height: 2),
-                          Text(
-                            '${tower.azimuthBearing.toStringAsFixed(0)}° (${GeoCalculator.bearingToCardinal(tower.azimuthBearing)})',
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w800,
-                              color: AppColors.primary,
+                      Expanded(
+                        child: Column(
+                          children: [
+                            const Text(
+                              'RUMBO / AZIMUT',
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(fontSize: 10, color: AppColors.onSurfaceVariant, fontWeight: FontWeight.bold),
                             ),
-                          ),
-                        ],
+                            const SizedBox(height: 2),
+                            Text(
+                              '${tower.azimuthBearing.toStringAsFixed(0)}° (${GeoCalculator.bearingToCardinal(tower.azimuthBearing)})',
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w800,
+                                color: AppColors.primary,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),

@@ -84,15 +84,21 @@ class _RfCalculatorSheetState extends State<RfCalculatorSheet> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Row(
-                  children: [
-                    Icon(Icons.calculate, color: AppColors.primary),
-                    SizedBox(width: 8),
-                    Text(
-                      'Calculadora de Enlace RF',
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
-                    ),
-                  ],
+                const Expanded(
+                  child: Row(
+                    children: [
+                      Icon(Icons.calculate, color: AppColors.primary),
+                      SizedBox(width: 8),
+                      Expanded(
+                        child: Text(
+                          'Calculadora de Enlace RF',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 IconButton(
                   icon: const Icon(Icons.close, size: 20, color: AppColors.onSurfaceVariant),
@@ -118,11 +124,10 @@ class _RfCalculatorSheetState extends State<RfCalculatorSheet> {
                 border: Border.all(color: AppColors.primary, width: 1.5),
               ),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  _buildResultItem('RSRP ESTIMADO', '${estimatedRsrp.toStringAsFixed(1)} dBm', AppColors.accent5G),
-                  _buildResultItem('THROUGHPUT', '$estimatedSpeed Mbps', Colors.white),
-                  _buildResultItem('MARGEN ENLACE', '+${fadeMargin.toStringAsFixed(1)} dB', AppColors.alignedGreen),
+                  Expanded(child: _buildResultItem('RSRP ESTIMADO', '${estimatedRsrp.toStringAsFixed(1)} dBm', AppColors.accent5G)),
+                  Expanded(child: _buildResultItem('THROUGHPUT', '$estimatedSpeed Mbps', Colors.white)),
+                  Expanded(child: _buildResultItem('MARGEN ENLACE', '+${fadeMargin.toStringAsFixed(1)} dB', AppColors.alignedGreen)),
                 ],
               ),
             ),
@@ -134,7 +139,9 @@ class _RfCalculatorSheetState extends State<RfCalculatorSheet> {
               style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: AppColors.onSurfaceVariant),
             ),
             const SizedBox(height: 8),
-            Row(
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
               children: [
                 ChoiceChip(
                   label: const Text('5G n78 (3.5 GHz • FWA High)'),
@@ -155,7 +162,6 @@ class _RfCalculatorSheetState extends State<RfCalculatorSheet> {
                     }
                   },
                 ),
-                const SizedBox(width: 8),
                 ChoiceChip(
                   label: const Text('5G n28 (700 MHz)'),
                   selected: !_isN78,
@@ -183,7 +189,10 @@ class _RfCalculatorSheetState extends State<RfCalculatorSheet> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text('Ganancia de Antena Exterior:', style: TextStyle(fontSize: 12, color: Colors.white)),
+                const Expanded(
+                  child: Text('Ganancia de Antena Exterior:', maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 12, color: Colors.white)),
+                ),
+                const SizedBox(width: 8),
                 Text('${_antennaGainDbi.toStringAsFixed(1)} dBi', style: const TextStyle(fontWeight: FontWeight.bold, color: AppColors.primary)),
               ],
             ),
@@ -200,7 +209,10 @@ class _RfCalculatorSheetState extends State<RfCalculatorSheet> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text('Distancia a la Estación Base:', style: TextStyle(fontSize: 12, color: Colors.white)),
+                const Expanded(
+                  child: Text('Distancia a la Estación Base:', maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 12, color: Colors.white)),
+                ),
+                const SizedBox(width: 8),
                 Text('${_distanceMeters.toStringAsFixed(0)} m', style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
               ],
             ),
@@ -217,7 +229,10 @@ class _RfCalculatorSheetState extends State<RfCalculatorSheet> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text('Longitud de Cable Exterior:', style: TextStyle(fontSize: 12, color: Colors.white)),
+                const Expanded(
+                  child: Text('Longitud de Cable Exterior:', maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 12, color: Colors.white)),
+                ),
+                const SizedBox(width: 8),
                 Text('${_cableLengthMeters.toStringAsFixed(0)} m', style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
               ],
             ),
@@ -236,14 +251,22 @@ class _RfCalculatorSheetState extends State<RfCalculatorSheet> {
                   activeColor: AppColors.primary,
                   onChanged: (v) => setState(() => _isCat6aEthernet = v ?? true),
                 ),
-                const Text('Cable Ethernet Cat 6A PoE (Pérdida RF despreciable)', style: TextStyle(fontSize: 11, color: AppColors.onSurfaceVariant)),
+                const Expanded(
+                  child: Text(
+                    'Cable Ethernet Cat 6A PoE (Pérdida RF despreciable)',
+                    style: TextStyle(fontSize: 11, color: AppColors.onSurfaceVariant),
+                  ),
+                ),
               ],
             ),
             // Mast height slider
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text('Altura de Mástil / Soporte:', style: TextStyle(fontSize: 12, color: Colors.white)),
+                const Expanded(
+                  child: Text('Altura de Mástil / Soporte:', maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 12, color: Colors.white)),
+                ),
+                const SizedBox(width: 8),
                 Text('${_mountHeightMeters.toStringAsFixed(1)} m', style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
               ],
             ),
@@ -300,9 +323,21 @@ class _RfCalculatorSheetState extends State<RfCalculatorSheet> {
   Widget _buildResultItem(String title, String val, Color color) {
     return Column(
       children: [
-        Text(title, style: const TextStyle(fontSize: 9, color: AppColors.onSurfaceVariant, fontWeight: FontWeight.bold)),
+        Text(
+          title,
+          textAlign: TextAlign.center,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: const TextStyle(fontSize: 9, color: AppColors.onSurfaceVariant, fontWeight: FontWeight.bold),
+        ),
         const SizedBox(height: 2),
-        Text(val, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w900, color: color, fontFamily: 'monospace')),
+        Text(
+          val,
+          textAlign: TextAlign.center,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w900, color: color, fontFamily: 'monospace'),
+        ),
       ],
     );
   }
@@ -311,7 +346,10 @@ class _RfCalculatorSheetState extends State<RfCalculatorSheet> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(title, style: const TextStyle(fontSize: 11, color: AppColors.onSurfaceVariant)),
+        Expanded(
+          child: Text(title, style: const TextStyle(fontSize: 11, color: AppColors.onSurfaceVariant)),
+        ),
+        const SizedBox(width: 8),
         Text(val, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white)),
       ],
     );

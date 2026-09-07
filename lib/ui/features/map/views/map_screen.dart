@@ -460,17 +460,21 @@ class _MapScreenState extends State<MapScreen> {
                           ),
                           const SizedBox(height: 12),
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              _buildMetricChip(
-                                'DISTANCIA',
-                                GeoCalculator.formatDistance(selectedTower.distanceMeters),
-                                Icons.straighten,
+                              Expanded(
+                                child: _buildMetricChip(
+                                  'DISTANCIA',
+                                  GeoCalculator.formatDistance(selectedTower.distanceMeters),
+                                  Icons.straighten,
+                                ),
                               ),
-                              _buildMetricChip(
-                                'AZIMUT',
-                                '${selectedTower.azimuthBearing.toStringAsFixed(0)}° (${GeoCalculator.bearingToCardinal(selectedTower.azimuthBearing)})',
-                                Icons.explore,
+                              const SizedBox(width: 8),
+                              Expanded(
+                                child: _buildMetricChip(
+                                  'AZIMUT',
+                                  '${selectedTower.azimuthBearing.toStringAsFixed(0)}° (${GeoCalculator.bearingToCardinal(selectedTower.azimuthBearing)})',
+                                  Icons.explore,
+                                ),
                               ),
                             ],
                           ),
@@ -531,7 +535,7 @@ class _MapScreenState extends State<MapScreen> {
 
   Widget _buildMetricChip(String label, String value, IconData icon) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
       decoration: BoxDecoration(
         color: AppColors.surfaceVariant,
         borderRadius: BorderRadius.circular(10),
@@ -540,12 +544,25 @@ class _MapScreenState extends State<MapScreen> {
         children: [
           Icon(icon, size: 16, color: AppColors.primary),
           const SizedBox(width: 6),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(label, style: const TextStyle(fontSize: 9, color: AppColors.onSurfaceVariant, fontWeight: FontWeight.bold)),
-              Text(value, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w800, color: Colors.white)),
-            ],
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  label,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(fontSize: 9, color: AppColors.onSurfaceVariant, fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  value,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w800, color: Colors.white),
+                ),
+              ],
+            ),
           ),
         ],
       ),

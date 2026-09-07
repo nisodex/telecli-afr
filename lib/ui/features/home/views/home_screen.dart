@@ -324,10 +324,12 @@ class _HomeScreenState extends State<HomeScreen> {
               color: AppColors.surfaceVariant,
               borderRadius: BorderRadius.circular(8),
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            child: Wrap(
+              spacing: 12,
+              runSpacing: 6,
               children: [
                 Row(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     const Icon(Icons.height, size: 14, color: AppColors.primary),
                     const SizedBox(width: 4),
@@ -338,6 +340,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
                 Row(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     const Icon(Icons.gps_fixed, size: 14, color: AppColors.accent5G),
                     const SizedBox(width: 4),
@@ -348,6 +351,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
                 Row(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     const Icon(Icons.navigation, size: 14, color: AppColors.accent5GLow),
                     const SizedBox(width: 4),
@@ -554,27 +558,34 @@ class _HomeScreenState extends State<HomeScreen> {
               border: Border.all(color: AppColors.outline),
             ),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                _buildTowerRfMetric(
-                  'FSPL',
-                  '${RfCalculator.calculateFspl(t.distanceMeters, t.has5Gn78 ? RfCalculator.freq5Gn78Mhz : RfCalculator.freq5Gn28Mhz).toStringAsFixed(1)} dB',
-                  Colors.white70,
+                Expanded(
+                  child: _buildTowerRfMetric(
+                    'FSPL',
+                    '${RfCalculator.calculateFspl(t.distanceMeters, t.has5Gn78 ? RfCalculator.freq5Gn78Mhz : RfCalculator.freq5Gn28Mhz).toStringAsFixed(1)} dB',
+                    Colors.white70,
+                  ),
                 ),
-                _buildTowerRfMetric(
-                  'RSRP Est.',
-                  '${RfCalculator.estimateRsrp(distanceMeters: t.distanceMeters, isN78: t.has5Gn78).toStringAsFixed(0)} dBm',
-                  AppColors.accent5G,
+                Expanded(
+                  child: _buildTowerRfMetric(
+                    'RSRP Est.',
+                    '${RfCalculator.estimateRsrp(distanceMeters: t.distanceMeters, isN78: t.has5Gn78).toStringAsFixed(0)} dBm',
+                    AppColors.accent5G,
+                  ),
                 ),
-                _buildTowerRfMetric(
-                  '1ª Fresnel',
-                  '${RfCalculator.calculateFresnelRadius(t.distanceMeters, t.has5Gn78 ? RfCalculator.freq5Gn78Mhz : RfCalculator.freq5Gn28Mhz).toStringAsFixed(1)} m',
-                  AppColors.primary,
+                Expanded(
+                  child: _buildTowerRfMetric(
+                    '1ª Fresnel',
+                    '${RfCalculator.calculateFresnelRadius(t.distanceMeters, t.has5Gn78 ? RfCalculator.freq5Gn78Mhz : RfCalculator.freq5Gn28Mhz).toStringAsFixed(1)} m',
+                    AppColors.primary,
+                  ),
                 ),
-                _buildTowerRfMetric(
-                  'Downlink',
-                  '~${RfCalculator.estimateDownlinkThroughput(rsrpDbm: RfCalculator.estimateRsrp(distanceMeters: t.distanceMeters, isN78: t.has5Gn78), isN78: t.has5Gn78)}M',
-                  Colors.white,
+                Expanded(
+                  child: _buildTowerRfMetric(
+                    'Downlink',
+                    '~${RfCalculator.estimateDownlinkThroughput(rsrpDbm: RfCalculator.estimateRsrp(distanceMeters: t.distanceMeters, isN78: t.has5Gn78), isN78: t.has5Gn78)}M',
+                    Colors.white,
+                  ),
                 ),
               ],
             ),
@@ -657,11 +668,16 @@ class _HomeScreenState extends State<HomeScreen> {
         border: Border.all(color: AppColors.outline),
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          _buildStatCol('Torres Movistar', _viewModel.towers.length.toString(), AppColors.primary),
-          _buildStatCol('5G n78 (3.5 GHz)', n78Count.toString(), AppColors.accent5G),
-          _buildStatCol('5G n28 (700 MHz)', n28Count.toString(), AppColors.accent5GLow),
+          Expanded(
+            child: _buildStatCol('Torres Movistar', _viewModel.towers.length.toString(), AppColors.primary),
+          ),
+          Expanded(
+            child: _buildStatCol('5G n78 (3.5 GHz)', n78Count.toString(), AppColors.accent5G),
+          ),
+          Expanded(
+            child: _buildStatCol('5G n28 (700 MHz)', n28Count.toString(), AppColors.accent5GLow),
+          ),
         ],
       ),
     );
@@ -670,9 +686,17 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildStatCol(String title, String val, Color color) {
     return Column(
       children: [
-        Text(val, style: TextStyle(fontSize: 20, fontWeight: FontWeight.w900, color: color)),
+        Text(
+          val,
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w900, color: color),
+          textAlign: TextAlign.center,
+        ),
         const SizedBox(height: 2),
-        Text(title, style: const TextStyle(fontSize: 10, color: AppColors.onSurfaceVariant)),
+        Text(
+          title,
+          style: const TextStyle(fontSize: 10, color: AppColors.onSurfaceVariant),
+          textAlign: TextAlign.center,
+        ),
       ],
     );
   }

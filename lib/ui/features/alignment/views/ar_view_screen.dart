@@ -361,13 +361,12 @@ class _ArViewScreenState extends State<ArViewScreen> with SingleTickerProviderSt
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              _buildHeaderTelemetryItem('Altura mástil', '${kDefaultTowerHeight.toStringAsFixed(1)} m', Colors.white),
+                              Expanded(child: _buildHeaderTelemetryItem('Altura mástil', '${kDefaultTowerHeight.toStringAsFixed(1)} m', Colors.white)),
                               Container(width: 1, height: 22, color: AppColors.outline),
-                              _buildHeaderTelemetryItem('Cota antena', '${totalCota.toStringAsFixed(0)} m', AppColors.primary),
+                              Expanded(child: _buildHeaderTelemetryItem('Cota antena', '${totalCota.toStringAsFixed(0)} m', AppColors.primary)),
                               Container(width: 1, height: 22, color: AppColors.accent5G),
-                              _buildHeaderTelemetryItem('Tilt óptimo', '${elevationTilt >= 0 ? '+' : ''}${elevationTilt.toStringAsFixed(1)}°', AppColors.accent5G),
+                              Expanded(child: _buildHeaderTelemetryItem('Tilt óptimo', '${elevationTilt >= 0 ? '+' : ''}${elevationTilt.toStringAsFixed(1)}°', AppColors.accent5G)),
                             ],
                           ),
                         ),
@@ -524,11 +523,17 @@ class _ArViewScreenState extends State<ArViewScreen> with SingleTickerProviderSt
       children: [
         Text(
           label,
+          textAlign: TextAlign.center,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
           style: const TextStyle(fontSize: 10, color: AppColors.onSurfaceVariant),
         ),
         const SizedBox(height: 1),
         Text(
           value,
+          textAlign: TextAlign.center,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
           style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: valueColor),
         ),
       ],

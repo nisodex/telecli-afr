@@ -175,10 +175,15 @@ class _OfflineProvincesModalState extends State<OfflineProvincesModal> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        _downloadStatusText,
-                        style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: Colors.white),
+                      Expanded(
+                        child: Text(
+                          _downloadStatusText,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: Colors.white),
+                        ),
                       ),
+                      const SizedBox(width: 8),
                       Text(
                         '${(_downloadProgress * 100).toStringAsFixed(0)}%',
                         style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.primary),
@@ -218,9 +223,13 @@ class _OfflineProvincesModalState extends State<OfflineProvincesModal> {
                         contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                         title: Row(
                           children: [
-                            Text(
-                              province.name,
-                              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: Colors.white),
+                            Flexible(
+                              child: Text(
+                                province.name,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: Colors.white),
+                              ),
                             ),
                             const SizedBox(width: 8),
                             if (isDownloaded)

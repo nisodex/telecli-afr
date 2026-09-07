@@ -116,25 +116,30 @@ class _CompassAlignmentScreenState extends State<CompassAlignmentScreen> {
                   border: Border.all(color: AppColors.outline),
                 ),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Column(
-                      children: [
-                        const Text('FSPL', style: TextStyle(fontSize: 10, color: AppColors.onSurfaceVariant)),
-                        Text('${fsplDb.toStringAsFixed(1)} dB', style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white)),
-                      ],
+                    Expanded(
+                      child: Column(
+                        children: [
+                          const Text('FSPL', maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 10, color: AppColors.onSurfaceVariant)),
+                          Text('${fsplDb.toStringAsFixed(1)} dB', maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white)),
+                        ],
+                      ),
                     ),
-                    Column(
-                      children: [
-                        const Text('1ª Fresnel', style: TextStyle(fontSize: 10, color: AppColors.onSurfaceVariant)),
-                        Text('${fresnelR1.toStringAsFixed(1)} m', style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.primary)),
-                      ],
+                    Expanded(
+                      child: Column(
+                        children: [
+                          const Text('1ª Fresnel', maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 10, color: AppColors.onSurfaceVariant)),
+                          Text('${fresnelR1.toStringAsFixed(1)} m', maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.primary)),
+                        ],
+                      ),
                     ),
-                    Column(
-                      children: [
-                        const Text('Tilt Real', style: TextStyle(fontSize: 10, color: AppColors.onSurfaceVariant)),
-                        Text('${currentPitch.toStringAsFixed(1)}°', style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.accent5G)),
-                      ],
+                    Expanded(
+                      child: Column(
+                        children: [
+                          const Text('Tilt Real', maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 10, color: AppColors.onSurfaceVariant)),
+                          Text('${currentPitch.toStringAsFixed(1)}°', maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.accent5G)),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -328,7 +333,10 @@ class _CompassAlignmentScreenState extends State<CompassAlignmentScreen> {
                         );
                       },
                       icon: const Icon(Icons.videocam, size: 20),
-                      label: const Text('VISOR CÁMARA AR'),
+                      label: const FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text('VISOR CÁMARA AR'),
+                      ),
                       style: OutlinedButton.styleFrom(
                         minimumSize: const Size(double.infinity, 48),
                       ),
@@ -344,7 +352,10 @@ class _CompassAlignmentScreenState extends State<CompassAlignmentScreen> {
                         return ElevatedButton.icon(
                           onPressed: _showSaveJobDialog,
                           icon: const Icon(Icons.check, size: 20),
-                          label: const Text('GUARDAR OBRA'),
+                          label: const FittedBox(
+                            fit: BoxFit.scaleDown,
+                            child: Text('GUARDAR OBRA'),
+                          ),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: isAligned ? AppColors.alignedGreen : AppColors.primary,
                             foregroundColor: isAligned ? Colors.black : Colors.white,
