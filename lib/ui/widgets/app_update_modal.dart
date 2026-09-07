@@ -43,7 +43,7 @@ class _AppUpdateModalState extends State<AppUpdateModal> {
     }
     // Check update on launch if idle
     if (_service.state == UpdateState.idle) {
-      _service.checkForUpdate(mockUpdate: true);
+      _service.checkForUpdate();
     }
   }
 
@@ -110,7 +110,7 @@ class _AppUpdateModalState extends State<AppUpdateModal> {
                   IconButton(
                     icon: const Icon(Icons.refresh, color: AppColors.onSurfaceVariant),
                     tooltip: 'Comprobar ahora',
-                    onPressed: () => _service.checkForUpdate(mockUpdate: true),
+                    onPressed: () => _service.checkForUpdate(),
                   ),
               ],
             ),
@@ -328,7 +328,7 @@ class _AppUpdateModalState extends State<AppUpdateModal> {
                     side: const BorderSide(color: AppColors.primary),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                   ),
-                  onPressed: () => _service.checkForUpdate(mockUpdate: true),
+                  onPressed: () => _service.checkForUpdate(),
                 ),
               ),
 
